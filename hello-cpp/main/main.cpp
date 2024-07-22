@@ -8,6 +8,7 @@
 
 #include "hello.h"
 using namespace HELLO;
+#include "led_controller.h"
 
 
 extern "C" void app_main(void)
@@ -15,8 +16,14 @@ extern "C" void app_main(void)
     HelloCpp app;
     int i = 0;
         
+    LedController led(GPIO_NUM_5);
+    led.init();
+
     while(true){
     app.run(i++);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    led.on();
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    led.off();
+    vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
